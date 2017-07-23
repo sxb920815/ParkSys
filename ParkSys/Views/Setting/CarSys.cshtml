@@ -1,0 +1,80 @@
+﻿@model Model.Pager<Model.Car>
+@{
+    ViewBag.Title = "CarSys";
+    var svr = new DAL.AreaSvr();
+    var previous = Model.Index - 1;
+    var next = Model.Index + 1;
+}
+
+<form action="/Setting/CarSys" method="post" id="form1">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>用户管理</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <a href="/Setting/CarEdit"><button type="button" class="btn btn-primary">添加</button></a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" class="form-control" name="key" value="@Request["key"]" placeholder="请输入名称">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </div>
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th class="column-title"> </th>
+                                <th class="column-title">车主</th>
+                                <th class="column-title">电话</th>
+                                <th class="column-title">车牌号</th>
+                                <th class="column-title">可入区域</th>
+                                <th class="column-title">创建时间</th>
+                                <th class="column-title no-link last">
+                                    <span class="nobr">编辑</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Data)
+                            {
+                                <tr>
+                                    <td class=" ">@item.CarId</td>
+                                    <td class=" ">@item.OwnerName</td>
+                                    <td class=" ">@item.OwnerPhone</td>
+                                    <td class=" ">@item.License</td>
+                                    <td class=" ">@svr.GetItem(item.AreaId).AreaName</td>
+                                    <td class=" ">@item.CreateTime</td>
+                                    <td class=" ">
+
+                                        <a onclick="if(confirm('确定要删除该车辆吗？'))return true;return false;" href="/Setting/CarDelete/@item.CarId">删除</a>
+                                        <a href="/Setting/CarEdit/@item.CarId">修改</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @Html.Partial("Page",@Model)
+        </div>
+    </div>
+</form>
+<script language="javascript">
+    function PagerChange(index) {
+        var temp = document.getElementById("form1");
+        var opt = document.createElement("input");
+        opt.name = "pageIndex";
+        opt.value = index;
+        temp.appendChild(opt);
+
+        temp.submit();
+
+    }
+</script>

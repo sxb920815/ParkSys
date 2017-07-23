@@ -1,0 +1,104 @@
+﻿@model List<Model.CardAnnal>
+@{
+    ViewBag.Title = "Index";
+    var svr = new DAL.CardAnnalSvr();
+    var breakModel = svr.GetListForIndex(1);
+    var allModel = svr.GetistAll();
+}
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body" id="img1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-8 col-sm-6 col-xs-12">
+
+    @{
+
+        foreach (var item in allModel)
+        {
+            <div class="col-md-6 col-sm-6 col-xs-12" style="height:250px" onclick="ShowImg('@item.ImagePath')" data-toggle="modal" data-target=".bs-example-modal-lg">
+                <div class="thumbnail" style="height:100%">
+                    <div class="image view view-first" style="height:100%">
+                        <div>
+
+                        </div>
+                        <img style="width: 100%; display: block;" src="@item.ImagePath" alt="image" />
+                        <div class="mask">
+                            <p>@item.License</p>
+                            <p>@item.CreateTime</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    }
+
+</div>
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <h2>车辆出入记录</h2>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr >
+                        <th class="column-title">车牌号</th>
+                        <th class="column-title">时间</th>
+                        <th class="column-title">状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr onclick="ShowImg('@item.ImagePath')" data-toggle="modal" data-target=".bs-example-modal-lg">
+                            <td class=" ">@item.License</td>
+                            <td class=" ">@item.CreateTime</td>
+                            <td class=" ">@item.State</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <h2>车辆违章记录</h2>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title">车牌号</th>
+                        <th class="column-title">时间</th>
+                        <th class="column-title">状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in breakModel)
+                    {
+                        <tr class="headings" onclick="ShowImg('@item.ImagePath')" data-toggle="modal" data-target=".bs-example-modal-lg">
+                            <td class=" ">@item.License</td>
+                            <td class=" ">@item.CreateTime</td>
+                            <td class=" ">@item.State</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<script>
+    setTimeout("location=location; ", 5000);
+
+    function ShowImg(path) {
+        var tmp = document.getElementById("img1");
+        var html = "<div class=\"image view view-first\" style=\"height:100%\"><img src=\"" + path + "\"   style=\"width: 100%; display: block;\" /></div>";
+        tmp.innerHTML = html;
+
+    }
+</script>

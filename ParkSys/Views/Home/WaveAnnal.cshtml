@@ -1,0 +1,51 @@
+﻿@model Model.Pager<Model.WaveAnnal>
+@{
+    ViewBag.Title = "WaveAnnal";
+    var previous = Model.Index - 1;
+    var next = Model.Index + 1;
+}
+<script src="~/Content/My97DatePicker/WdatePicker.js"></script>
+
+<form action="/Home/WaveAnnal" method="post" id="form1">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>微波记录</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="datetime" name="beginTime" placeholder="开始时间" value="@Request["beginTime"]" class="form-control" onclick="WdatePicker()" />
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="datetime" name="endTime" placeholder="截止时间" class="form-control" value="@Request["endTime"]" o onclick="WdatePicker()" />
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </div>
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th class="column-title">编号</th>
+                                <th class="column-title">卡号</th>
+                                <th class="column-title">时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Data)
+                            {
+                                <tr>
+                                    <td class=" ">@item.WaveAnnalId</td>
+                                    <td class=" ">@item.WaveCardId</td>
+                                    <td class=" ">@item.CreateTime</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+             @Html.Partial("Pager",@Model)
+        </div>
+    </div>
+</form>

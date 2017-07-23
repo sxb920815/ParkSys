@@ -1,0 +1,58 @@
+﻿@model List<Model.Equipment>
+@{
+    ViewBag.Title = "EquipmentSys";
+}
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>用户管理</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        &nbsp;&nbsp;<a href="/Setting/EquipmentEdit"><button type="button" class="btn btn-primary" >添加</button></a>
+        <div class="x_content">
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">编号</th>
+                            <th class="column-title">设备名</th>
+                            <th class="column-title">IP地址</th>
+                            <th class="column-title">序列号</th>
+                            <th class="column-title no-link last">
+                                <span class="nobr">编辑</span>
+                            </th>
+                            <th class="bulk-actions" colspan="7">
+                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class=" ">@item.EquipmentId</td>
+                                <td class=" ">@item.EquipmentName</td>
+                                <td class=" ">@item.IP</td>
+                                <td class=" ">@item.Serialno</td>
+                                <td class=" ">
+
+                                    <a  onclick="if(confirm('确定要删除该设备吗？'))return true;return false;" href="/Setting/EquipmentDelete/@item.EquipmentId">删除</a>
+                                    <a  href="/Setting/EquipmentEdit/@item.EquipmentId">修改</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

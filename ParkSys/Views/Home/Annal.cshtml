@@ -1,0 +1,77 @@
+﻿@model Model.Pager<Model.CardAnnal>
+@{
+    ViewBag.Title = "出入记录";
+}
+<script src="~/Content/My97DatePicker/WdatePicker.js"></script>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body" id="img1">
+
+            </div>
+        </div>
+    </div>
+</div>
+<form action="/Home/Annal" method="post" id="form1">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>出入记录</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" class="form-control" name="key" value="@Request["key"]" placeholder="请输入车牌号">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="datetime" name="beginTime" placeholder="开始时间" value="@Request["beginTime"]" class="form-control" onclick="WdatePicker()" />
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="datetime" name="endTime" placeholder="截止时间" value="@Request["endTime"]" class="form-control" onclick="WdatePicker()" />
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </div>
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th class="column-title">编号</th>
+                                <th class="column-title">车牌号</th>
+                                <th class="column-title">区域</th>
+                                <th class="column-title">时间</th>
+                                <th class="column-title">状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Data)
+                            {
+                                <tr onclick="ShowImg('@item.ImagePath')" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <td class=" ">@item.CardAnnalId</td>
+                                    <td class=" ">@item.License</td>
+                                    <td class=" ">@item.AreaId</td>
+                                    <td class=" ">@item.CreateTime</td>
+                                    <td class=" ">@item.State</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @Html.Partial("Page",@Model)
+          
+        </div>
+    </div>
+</form>
+
+<script>
+    function ShowImg(path) {
+        var tmp = document.getElementById("img1");
+        //var html = document.createElement("img");
+        //html.src = path;
+        var html = "<div class=\"image view view-first\" style=\"height:100%\"><img src=\"" + path + "\"   style=\"width: 100%; display: block;\" /></div>";
+        tmp.innerHTML = html;
+
+    }
+</script>
